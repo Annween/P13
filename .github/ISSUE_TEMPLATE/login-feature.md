@@ -1,7 +1,7 @@
 ---
 name: '#2 Login Requirement'
-about: Issue for the login requirement
-title: User can login to the system
+about: Issue for the auth requirement
+title: User can auth to the system
 labels: ''
 assignees: ''
 ---

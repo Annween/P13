@@ -64,7 +64,7 @@ paths:
       tags:
         - User Module
       summary: User Profile API
-      description: API for fetching a user profile
+      description: API for fetching a auth profile
       parameters:
         - in: header
           name: Authorization
@@ -87,7 +87,7 @@ paths:
       tags:
         - User Module
       summary: User Profile API
-      description: API for updating a user profile
+      description: API for updating a auth profile
       parameters:
         - in: header
           name: Authorization
@@ -95,7 +95,7 @@ paths:
           required: true
         - in: body
           name: body
-          description: Update user profile attributes
+          description: Update auth profile attributes
           required: true
           schema:
             $ref: '#/definitions/UserProfile'
@@ -120,24 +120,24 @@ definitions:
     properties:
       email:
         type: string
-        description: user email
+        description: auth email
       password:
         type: string
-        description: user password
+        description: auth password
       firstName:
         type: string
-        description: user first name
+        description: auth first name
       lastName:
         type: string
-        description: user last name
+        description: auth last name
   Login:
     properties:
       email:
         type: string
-        description: user email
+        description: auth email
       password:
         type: string
-        description: user password
+        description: auth password
   ApiResponse:
     type: object
     properties:

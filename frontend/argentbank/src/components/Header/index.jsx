@@ -5,6 +5,7 @@ import "./Header.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function Header() {
+	//if auth is Logg
 	return (
 		<nav className="main-nav">
 			<Link to="/" className="main-nav-logo">

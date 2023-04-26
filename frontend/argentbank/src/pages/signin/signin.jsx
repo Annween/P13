@@ -1,50 +1,68 @@
 import React from "react";
 import "./signin.css";
-import {login} from "../../services/api";
+import {login} from "../../services/auth";
 import store from "../../services/store";
+import  {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {loginSuccess, loginFailure} from "../../redux/auth/loginSlice";
 
 //se connecter
 function Signin() {
 
-	//instantiation de la classe Api
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+
 	const toLogin =  (e) => {
 		e.preventDefault();
 		const email = document.getElementById("email").value;
 		const password = document.getElementById("password").value;
 
-		//fonction store dispatch
-		//store.dispatch({type: "LOGIN_REQUEST"});
 
-		//callApi.login(email, password)
-		login(email, password)
-		.then((response) => {
-			store.dispatch({
-				type: "LOGIN_SUCCESS",
-				payload: {
-					email: response.data.email,
-					password: response.data.password
-				},
-			});
-//
-			console.log(response);
+		//fonction store dispatch
+		login(email, password).then((response) => {
+			console.log("response", response);
+			dispatch(loginSuccess());
+			navigate("/profile");
 		})
 		.catch((error) => {
-			store.dispatch({
+			dispatch(loginFailure(error.response));
+			console.log(error);
+		})
+
+
+	/*	auth(email, password)
+		.then((response) => {
+			dispatch({
+				type: "LOGIN_SUCCESS",
+				payload: {
+					email: response.email,
+					password: response.password
+				},
+			});
+			//Redirection vers la page profile
+			navigate("/profile");
+		})
+		.catch((error) => {
+			dispatch({
 				type: "LOGIN_FAILURE",
 				payload: {
 					error: error.response,
 				},
 			});
-			console.log(error.response);
-		});
+			console.log(error);
+		});*/
+
+
 	}
+
 
 	return (
 		<main className="main bg-dark">
 			<section className="sign-in-content">
 				<i className="fa fa-user-circle sign-in-icon"></i>
 				<h1>Sign In</h1>
-				<form>
+				<form >
 					<div className="input-wrapper">
 						<label htmlFor="email">Email</label
 						><input type="email" id="email"/>
@@ -65,6 +83,8 @@ function Signin() {
 			</section>
 		</main>
 	);
+
+
 }
 
 
