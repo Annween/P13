@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {type} from "@testing-library/user-event/dist/type";
+
 
 const initialState = {
 	isLoading: false,
 	error: '',
-	username : null,
+	user : null,
 	token: null,
 	isLogged: false
 }
@@ -19,23 +19,23 @@ const loginSlice = createSlice({
 		loginSuccess: (state, action) => {
 			state.isLoading = false
 			state.error = ''
-			state.isLogged = true
-			state.login = action.payload.username
+			state.user = action.payload.user
 			state.token = action.payload.token
+			state.isLogged = true
 		},
 		loginFailure: (state, action) => {
 			state.isLoading = false
-			state.error = action.payload
+			state.error = action.payload.error
 			state.isLogged = false
 			state.token = null
-			state.login = null
+			state.user = null
 		},
 		logout: (state) => {
 			state.isLoading = false
 			state.error = ''
 			state.isLogged = false
 			state.token = null
-			state.login = null
+			state.user = null
 		},
 
 	}

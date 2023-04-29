@@ -1,38 +1,41 @@
 import React from "react";
 import "./profile.css";
 import {getCurrentUser} from "../../services/user";
-import store from "../../services/store";
 import {useSelector, useDispatch} from "react-redux";
-import {Navigate} from "react-router-dom";
-import { profileSuccess} from "../../redux/profile/profileSlice";
+import {useNavigate} from "react-router-dom";
+import {profileSuccess} from "../../redux/profile/profileSlice";
 
 
 function Profile() {
 
 	const dispatch = useDispatch()
-
-	const { user: currentUser } = useSelector((state) => state.login);
-
-	console.log("currentUser", currentUser);
-
-	if (!currentUser) {
-		return <Navigate to="/signin" />;
-	}
+	const navigate = useNavigate()
+	const {isLoading, error, firstName, lastName} = useSelector((state) => state.profile)
 
 
 	getCurrentUser()
-	.then((response) => {
-		dispatch(profileSuccess(response));
-		console.log("response", response);
+		.then((response) => {
+			dispatch(profileSuccess(response.body));
+		}).catch((err) => {
+		if (err.response.status === 401) {
+			navigate("/signin");
+		}
 	})
 
+	const EditName = () => {
+		document
+	}
 
+
+	if (isLoading) {
+		return <div>Loading...</div>
+	}
 
 
 	return <main className="main bg-dark">
 		<div className="header">
-			<h1>Welcome back<br/>{currentUser.firstName}</h1>
-			<button className="edit-button">Edit Name</button>
+			<h1>Welcome back<br/>{firstName + ' ' + lastName}</h1>
+			<button className="edit-button" id="edit">Edit Name</button>
 		</div>
 		<h2 className="sr-only">Accounts</h2>
 		<section className="account">

@@ -3,7 +3,7 @@ import "./signin.css";
 import {login} from "../../services/auth";
 import store from "../../services/store";
 import  {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, loginFailure} from "../../redux/auth/loginSlice";
 
 //se connecter
@@ -11,48 +11,21 @@ function Signin() {
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const {error} = useSelector((state) => state.login);
 
 	const toLogin =  (e) => {
 		e.preventDefault();
 		const email = document.getElementById("email").value;
 		const password = document.getElementById("password").value;
 
-
 		//fonction store dispatch
 		login(email, password).then((response) => {
-			console.log("response", response);
-			dispatch(loginSuccess());
+			dispatch(loginSuccess(response.body));
 			navigate("/profile");
 		})
 		.catch((error) => {
-			dispatch(loginFailure(error.response));
-			console.log(error);
+			dispatch(loginFailure(error.body));
 		})
-
-
-	/*	auth(email, password)
-		.then((response) => {
-			dispatch({
-				type: "LOGIN_SUCCESS",
-				payload: {
-					email: response.email,
-					password: response.password
-				},
-			});
-			//Redirection vers la page profile
-			navigate("/profile");
-		})
-		.catch((error) => {
-			dispatch({
-				type: "LOGIN_FAILURE",
-				payload: {
-					error: error.response,
-				},
-			});
-			console.log(error);
-		});*/
-
 
 	}
 

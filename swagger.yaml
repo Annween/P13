@@ -60,7 +60,7 @@ paths:
   /user/profile:
     post:
       security:
-        - Bearer: []
+        - Bearer: [ ]
       tags:
         - User Module
       summary: User Profile API
@@ -83,7 +83,7 @@ paths:
           description: Internal Server Error
     put:
       security:
-        - Bearer: []
+        - Bearer: [ ]
       tags:
         - User Module
       summary: User Profile API
@@ -110,6 +110,138 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
+
+  /accounts/:accountId/transactions:
+    get:
+      security:
+          - Bearer: [ ]
+      tags:
+          - User Module
+      summary: User Profile API
+      description: API for updating a auth profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+      required: true
+        - in: body
+          name: body
+          description: Update auth profile attributes
+          required: true
+          schema:
+              $ref: '#/definitions/UserProfile'
+      produces:
+          - application/json
+      responses:
+          '200':
+            description: User profile retrieved successully
+          schema:
+              $ref: '#/definitions/ApiResponse'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+
+  /accounts/:accountId/transactions/:transactionId:
+    get:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a auth profile
+      parameters:
+         in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        in: body
+          name: body
+          description: Update auth profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /accounts/:accountId/transactions/:transactionId/details:
+    put:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a auth profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required : true
+         - name: accountId
+          schema:
+            type: string
+          in: body
+          name: body
+        description: Update auth profile attributes
+        required: true
+        schema:
+          $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+        description: User profile retrieved successully
+        schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /accounts/:accountId/transactions/:transactionId/details:
+    delete:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a auth profile
+      parameters:
+        - in: header
+        name: Authorization
+        description: Attach Bearer JWT token
+        required: true
+          - in: body
+        name: body
+        description: Update auth profile attributes
+        required: true
+        schema:
+          $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successully
+        schema:
+          $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+
+
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -164,3 +296,36 @@ definitions:
         type: string
       lastName:
         type: string
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

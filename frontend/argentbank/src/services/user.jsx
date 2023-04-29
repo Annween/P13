@@ -1,24 +1,24 @@
 import axios from "axios";
+import {useSelector} from "react-redux";
+import {Navigate} from "react-router-dom";
+
+
 
 const API_URL = "http://localhost:3001/api/v1/user/";
 
-function authHeader() {
+const AuthHeader = () => {
 	// return authorization header with jwt token
-	let user = JSON.parse(localStorage.getItem("user"));
+	const user = useSelector((state) => state.login)
 
-	if (user && user.body.token) {
-		return {Authorization: "Bearer " + user.body.token};
+	if (user && user.token) {
+		return {Authorization: "Bearer " + user.token};
 	} else {
 		return {};
 	}
 }
 
 export async function getCurrentUser() {
-	try {
-		const res = await axios.post(API_URL + "profile", {}, {headers: authHeader()});
-		return await res.data;
+		const res = await axios.post(API_URL + "profile", {}, {headers: AuthHeader()});
+		return res.data;
 
-	} catch (err) {
-		console.log(err);
-	}
 }

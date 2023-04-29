@@ -2,9 +2,9 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
 	isLoading: false,
-	error: '',
 	firstName: '',
 	lastName: '',
+
 }
 
 const profileSlice = createSlice({
@@ -16,13 +16,11 @@ const profileSlice = createSlice({
 		},
 		profileSuccess: (state, action) => {
 			state.isLoading = false
-			state.error = ''
 			state.firstName = action.payload.firstName
 			state.lastName = action.payload.lastName
 		},
 		profileFailure: (state, action) => {
 			state.isLoading = false
-			state.error = action.payload.error
 		},
 	}
 })
