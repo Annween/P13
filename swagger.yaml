@@ -92,6 +92,7 @@ paths:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
+          type: string
           required: true
         - in: body
           name: body
@@ -115,33 +116,34 @@ paths:
   /accounts/:accountId/transactions:
     get:
       security:
-          - Bearer: [ ]
+        - Bearer: [ ]
       tags:
-          - User Module
+        - User Module
       summary: User Profile API
       description: API for updating a auth profile
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
-      required: true
+          type: string
+          required: true
         - in: body
           name: body
           description: Update auth profile attributes
           required: true
           schema:
-              $ref: '#/definitions/UserProfile'
+            $ref: '#/definitions/UserProfile'
       produces:
-          - application/json
+        - application/json
       responses:
-          '200':
-            description: User profile retrieved successully
-          schema:
-              $ref: '#/definitions/ApiResponse'
-          '400':
-            description: Invalid Fields
-          '500':
-            description: Internal Server Error
+        '200':
+          description: User profile retrieved successully
+        schema:
+          $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
 
   /accounts/:accountId/transactions/:transactionId:
     get:
@@ -152,11 +154,12 @@ paths:
       summary: User Profile API
       description: API for updating a auth profile
       parameters:
-         in: header
+        - in: header
           name: Authorization
           description: Attach Bearer JWT token
+          type: string
           required: true
-        in: body
+        - in: body
           name: body
           description: Update auth profile attributes
           required: true
@@ -186,15 +189,17 @@ paths:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
-          required : true
-         - name: accountId
-          schema:
-            type: string
-          in: body
+          type: string
+          required: true
+        - name: accountId
+          in: path
+          required: true
+          type: string
+        - in: body
           name: body
-        description: Update auth profile attributes
-        required: true
-        schema:
+          description: Update auth profile attributes
+          required: true
+          schema:
           $ref: '#/definitions/UserProfile'
       produces:
         - application/json
@@ -202,13 +207,11 @@ paths:
         '200':
         description: User profile retrieved successully
         schema:
-            $ref: '#/definitions/ApiResponse'
+          $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
-  /accounts/:accountId/transactions/:transactionId/details:
     delete:
       security:
         - Bearer: [ ]
@@ -218,14 +221,15 @@ paths:
       description: API for updating a auth profile
       parameters:
         - in: header
-        name: Authorization
-        description: Attach Bearer JWT token
-        required: true
-          - in: body
-        name: body
-        description: Update auth profile attributes
-        required: true
-        schema:
+          name: Authorization
+          description: Attach Bearer JWT token
+          type: string
+          required: true
+        - in: body
+          name: body
+          description: Update auth profile attributes
+          required: true
+          schema:
           $ref: '#/definitions/UserProfile'
       produces:
         - application/json
