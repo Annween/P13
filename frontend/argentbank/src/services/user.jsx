@@ -22,3 +22,11 @@ export async function getCurrentUser() {
 		return res.data;
 
 }
+
+export async function updateProfile(firstName, lastName) {
+	const res = await axios.put(API_URL + "profile", {
+		firstName,
+		lastName
+	}, {headers: AuthHeader()});
+	return res.data;
+}

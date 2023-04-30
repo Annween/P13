@@ -49,6 +49,10 @@
     margin-bottom: 2rem;
 }
 
+.hide {
+    display: none;
+}
+
 .transaction-button {
     display: block;
     width: 100%;

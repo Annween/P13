@@ -22,16 +22,7 @@ export async function login(email, password) {
 	} catch (err) {
 		return err;
 	}
-
-
 };
-
-export async function logout() {
-
-
-};
-
-
 
 
 

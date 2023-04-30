@@ -1,9 +1,10 @@
 import React from "react";
 import "./profile.css";
-import {getCurrentUser} from "../../services/user";
+import {getCurrentUser, updateProfile} from "../../services/user";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {profileSuccess} from "../../redux/profile/profileSlice";
+import {profileFailure, profileSuccess} from "../../redux/profile/profileSlice";
+
 
 
 function Profile() {
@@ -22,8 +23,42 @@ function Profile() {
 		}
 	})
 
-	const EditName = () => {
-		document
+	/*const editForm = (e) => {
+		e.preventDefault()
+		document.querySelector('.header').classList.add('hide')
+	return <Edit/>
+
+	} */
+
+	const  handleSubmit = (e) => {
+		e.preventDefault();
+		const firstName = document.getElementById("firstName").value;
+		const lastName = document.getElementById("lastName").value;
+		const user = {firstName, lastName};
+		updateProfile(user).then((response) => {
+			dispatch(profileSuccess(response.body));
+		}).catch((error) => {
+			dispatch(profileFailure(error.body));
+		})
+
+	}
+
+	const EditForm = () => {
+		//if user clicks on edit button, show edit form
+		return <div className="edit">
+			<form onSubmit={handleSubmit}>
+				<div className="input-wrapper">
+					<label htmlFor="firstName">First Name</label>
+					<input type="text" id="firstName" value={firstName}/>
+				</div>
+				<div className="input-wrapper">
+					<label htmlFor="lastName">Last Name</label>
+					<input type="text" id="lastName" value={lastName}/>
+				</div>
+				<button className="edit-button" id="save" type="submit">Save</button>
+				<button className="edit-button" id="cancel" type="button">Cancel</button>
+			</form>
+		</div>
 	}
 
 

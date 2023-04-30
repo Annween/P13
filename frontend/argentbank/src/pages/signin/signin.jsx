@@ -11,7 +11,6 @@ function Signin() {
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const {error} = useSelector((state) => state.login);
 
 	const toLogin =  (e) => {
 		e.preventDefault();
@@ -24,6 +23,7 @@ function Signin() {
 			navigate("/profile");
 		})
 		.catch((error) => {
+			console.log(error);
 			dispatch(loginFailure(error.body));
 		})
 
