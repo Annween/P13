@@ -20,9 +20,9 @@ export async function login(email, password) {
 		return res.data;
 
 	} catch (err) {
-		return err;
+		throw err.response.data;
 	}
-};
+}
 
 
 

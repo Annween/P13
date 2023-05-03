@@ -2,17 +2,19 @@ import React from "react";
 import "./signin.css";
 import {login} from "../../services/auth";
 import store from "../../services/store";
-import  {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, loginFailure} from "../../redux/auth/loginSlice";
+import Alert from 'react-bootstrap/Alert';
 
 //se connecter
 function Signin() {
-
+	const {error, isLoading} = useSelector((state) => state.login);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const toLogin =  (e) => {
+
+	const toLogin = (e) => {
 		e.preventDefault();
 		const email = document.getElementById("email").value;
 		const password = document.getElementById("password").value;
@@ -21,21 +23,18 @@ function Signin() {
 		login(email, password).then((response) => {
 			dispatch(loginSuccess(response.body));
 			navigate("/profile");
+		}).catch((error) => {
+				dispatch(loginFailure(error.message));
 		})
-		.catch((error) => {
-			console.log(error);
-			dispatch(loginFailure(error.body));
-		})
-
 	}
-
 
 	return (
 		<main className="main bg-dark">
 			<section className="sign-in-content">
 				<i className="fa fa-user-circle sign-in-icon"></i>
 				<h1>Sign In</h1>
-				<form >
+				{error && <Alert variant="danger" key={error} >{error}</Alert>}
+				<form onSubmit={toLogin}>
 					<div className="input-wrapper">
 						<label htmlFor="email">Email</label
 						><input type="email" id="email"/>
@@ -50,7 +49,9 @@ function Signin() {
 					>
 					</div>
 
-					<button id="signIn" type="submit" className="sign-in-button" onClick={toLogin}>Sign In</button>
+					<button id="signIn" type="submit" className="sign-in-button">Sign In</button>
+
+					{isLoading && <Alert variant="warning" key={isLoading} >Loading...</Alert>}
 
 				</form>
 			</section>

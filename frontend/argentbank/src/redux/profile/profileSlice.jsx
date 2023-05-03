@@ -21,6 +21,9 @@ const profileSlice = createSlice({
 		},
 		profileFailure: (state, action) => {
 			state.isLoading = false
+			state.error = action.payload
+			state.firstName = ''
+			state.lastName = ''
 		},
 	}
 })
