@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./profile.css";
-import {AuthHeader,getCurrentUser, updateProfile} from "../../services/user";
+import {AuthHeader, getCurrentUser, updateProfile} from "../../services/user";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {profileFailure, profileSuccess} from "../../redux/profile/profileSlice";
+import Account from "../../components/Account";
 
 function Profile() {
 
@@ -11,7 +12,10 @@ function Profile() {
 	const navigate = useNavigate()
 	const {isLoading, error, firstName, lastName} = useSelector((state) => state.profile)
 	const [isEditing, setIsEditing] = useState(false)
-	const [user, setUser] = useState({firstName, lastName})
+	//const [user, setUser] = useState({firstName, lastName})
+	//const [newUser, setNewUser] = useState({firstName, lastName})
+	const [formFirstName, setFormFirstName] = useState()
+	const [formLastName, setFormLastName] = useState()
 	const token = AuthHeader();
 
 
@@ -24,79 +28,62 @@ function Profile() {
 		}
 	})
 
+	useEffect(() => {
+		setFormFirstName(firstName);
+		setFormLastName(lastName);
+	}, [firstName, lastName])
 
 
-	 const handleSubmit = (e) =>  {
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		 updateProfile(user, token).then((response) => {
-			 dispatch(profileSuccess(response.body));
-			 setIsEditing(false);
-		 }).catch((error) => {
-			 dispatch(profileFailure(error.message));
-		 })
+		updateProfile(
+		{
+			firstName: formFirstName,
+			lastName: formLastName
+		}, token).then((response) => {
+			dispatch(profileSuccess(response.body));
+			setIsEditing(false);
+		}).catch((error) => {
+			dispatch(profileFailure(error.message));
+		})
 
 	}
 
-	const handleChange = (e) => {
-		setUser({...user, [e.target.id]: e.target.value})
-	}
-
-
-
-	return <main className="main bg-dark">
+	return <>
+	<main className="main bg-dark">
 		<div className="header">
 			<h1>Welcome back<br/>{firstName + ' ' + lastName}</h1>
 
 			<button className="edit-button" id="edit" onClick={() => setIsEditing(true)}>Edit Name</button>
-			{ isEditing &&
-			<div className="edit">
-				<form onSubmit={handleSubmit}>
-					<div className="input-wrapper">
-						<label htmlFor="firstName">First Name</label>
-						<input type="text" id="firstName" onChange={handleChange} placeholder={firstName} />
-					</div>
-					<div className="input-wrapper">
-						<label htmlFor="lastName">Last Name</label>
-						<input type="text" id="lastName" onChange={handleChange} placeholder={lastName} />
-					</div>
-					<button className="edit-button" id="save" type="submit">Save</button>
-					<button className="edit-button" id="cancel" type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-				</form>
-			</div>
-		 }
+			{isEditing &&
+				<div className="edit">
+					<form onSubmit={handleSubmit}>
+						<div className="flex">
+							<div className="form-group">
+								<input type="text" className="form-control" id="firstName" onChange={(e) => setFormFirstName(e.target.value)}
+								        value={formFirstName}/>
+							</div>
+							<div className="form-group">
+								<input type="text" className="form-control" id="lastName" onChange={(e) => setFormLastName(e.target.value)}
+								      value={formLastName}/>
+							</div>
+						</div>
+						
+						<button className="edit-button" id="save" type="submit">Save</button>
+						<button className="edit-button" id="cancel" type="button"
+						        onClick={() => setIsEditing(false)}>Cancel
+						</button>
+
+					</form>
+				</div>
+			}
 		</div>
 		<h2 className="sr-only">Accounts</h2>
-		<section className="account">
-			<div className="account-content-wrapper">
-				<h3 className="account-title">Argent Bank Checking (x8349)</h3>
-				<p className="account-amount">$2,082.79</p>
-				<p className="account-amount-description">Available Balance</p>
-			</div>
-			<div className="account-content-wrapper cta">
-				<button className="transaction-button">View transactions</button>
-			</div>
-		</section>
-		<section className="account">
-			<div className="account-content-wrapper">
-				<h3 className="account-title">Argent Bank Savings (x6712)</h3>
-				<p className="account-amount">$10,928.42</p>
-				<p className="account-amount-description">Available Balance</p>
-			</div>
-			<div className="account-content-wrapper cta">
-				<button className="transaction-button">View transactions</button>
-			</div>
-		</section>
-		<section className="account">
-			<div className="account-content-wrapper">
-				<h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-				<p className="account-amount">$184.30</p>
-				<p className="account-amount-description">Current Balance</p>
-			</div>
-			<div className="account-content-wrapper cta">
-				<button className="transaction-button">View transactions</button>
-			</div>
-		</section>
-	</main>;
+
+		<Account />
+
+	</main>
+	</>;
 }
 
 

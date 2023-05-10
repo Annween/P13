@@ -119,8 +119,8 @@ paths:
         - Bearer: [ ]
       tags:
         - User Module
-      summary: User Profile API
-      description: API for updating a auth profile
+      summary: User Transaction API
+      description: API GET all transactions from an account
       parameters:
         - in: header
           name: Authorization
@@ -151,8 +151,8 @@ paths:
         - Bearer: [ ]
       tags:
         - User Module
-      summary: User Profile API
-      description: API for updating a auth profile
+      summary: User Transaction API
+      description: API GET one transaction from an account
       parameters:
         - in: header
           name: Authorization
@@ -164,7 +164,7 @@ paths:
           description: Update auth profile attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: '#/definitions/Transaction'
       produces:
         - application/json
       responses:
@@ -300,6 +300,27 @@ definitions:
         type: string
       lastName:
         type: string
+  Transaction:
+    type: object
+    properties:
+      accountId:
+        type: string
+      transactionId:
+        type: string
+      amount:
+        type: number
+      description:
+        type: string
+      date:
+        type: string
+      category:
+        type: string
+      type:
+        type: string
+      status:
+        type: string
+
+
 
 
 

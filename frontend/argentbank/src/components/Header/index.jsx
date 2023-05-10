@@ -13,7 +13,7 @@ function Header() {
 	const SetLink = () => {
 		if (login.token) {
 			return  <div className="main-nav-logo">
-				<Link to="#"  >
+				<Link to="/profile"  >
 					<i className="fa fa-user-circle"></i>
 					{profile.firstName}
 				</Link>

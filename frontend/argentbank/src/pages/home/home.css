@@ -81,3 +81,29 @@
         font-size: 1.2rem;
     }
 }
+
+
+
+@media (max-width: 768px) {
+
+    .hero {
+        height: 380px;
+
+    }
+
+    .feature-item {
+        padding: 1rem;
+    }
+
+    .feature-item-title {
+        font-size: 1rem;
+    }
+
+    .feature-icon {
+        width: 50px;
+        border: 5px solid #00bc77;
+        padding: 0.5rem;
+    }
+}
+
+

@@ -1,7 +1,6 @@
 import React from "react";
 import "./signin.css";
 import {login} from "../../services/auth";
-import store from "../../services/store";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {loginSuccess, loginFailure} from "../../redux/auth/loginSlice";
