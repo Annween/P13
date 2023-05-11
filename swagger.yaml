@@ -104,7 +104,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile updated successully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -127,19 +127,17 @@ paths:
           description: Attach Bearer JWT token
           type: string
           required: true
-        - in: body
-          name: body
-          description: Update auth profile attributes
+        - name: accountId
+          in: path
           required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
+          type: string
       produces:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
-        schema:
-          $ref: '#/definitions/ApiResponse'
+          description: User transactions retrieved successully
+          schema:
+            $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
         '500':
@@ -159,32 +157,32 @@ paths:
           description: Attach Bearer JWT token
           type: string
           required: true
-        - in: body
-          name: body
-          description: Update auth profile attributes
+        - name: accountId
+          in: path
           required: true
-          schema:
-            $ref: '#/definitions/Transaction'
+          type: string
+        - name: transactionId
+          in: path
+          required: true
+          type: string
       produces:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: Transaction retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/TransactionDetails'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
-  /accounts/:accountId/transactions/:transactionId/details:
     put:
       security:
         - Bearer: [ ]
       tags:
         - User Module
-      summary: User Profile API
-      description: API for updating a auth profile
+      summary: User Transaction API
+      description: API for updating transaction
       parameters:
         - in: header
           name: Authorization
@@ -195,19 +193,23 @@ paths:
           in: path
           required: true
           type: string
+        - name: transactionId
+          in: path
+          required: true
+          type: string
         - in: body
           name: body
-          description: Update auth profile attributes
+          description: See Transaction details
           required: true
           schema:
-          $ref: '#/definitions/UserProfile'
+            $ref: '#/definitions/TransactionDetails'
       produces:
         - application/json
       responses:
         '200':
-        description: User profile retrieved successully
-        schema:
-          $ref: '#/definitions/ApiResponse'
+          description: Transaction updated successully
+          schema:
+              $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -225,19 +227,27 @@ paths:
           description: Attach Bearer JWT token
           type: string
           required: true
-        - in: body
-          name: body
-          description: Update auth profile attributes
+        - name: accountId
+          in: path
           required: true
-          schema:
-          $ref: '#/definitions/UserProfile'
+          type: string
+        - name: transactionId
+          in: path
+          required: true
+          type: string
       produces:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
-        schema:
-          $ref: '#/definitions/ApiResponse'
+            description: OK
+            content:
+              application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                      type: string
+                      description: Message de confirmation indiquant que la transaction a été supprimée avec succès.
         '400':
           description: Invalid Fields
         '500':
@@ -300,7 +310,26 @@ definitions:
         type: string
       lastName:
         type: string
+
+
   Transaction:
+    type: object
+    properties:
+      accountId:
+        type: string
+      transactionId:
+        type: string
+      amount:
+        type: number
+      description:
+        type: string
+      date:
+        type: string
+      type:
+        type: string
+      status:
+        type: string
+  TransactionDetails:
     type: object
     properties:
       accountId:
@@ -319,6 +348,46 @@ definitions:
         type: string
       status:
         type: string
+      details:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+          firstName:
+            type: string
+          lastName:
+            type: string
+          phone:
+            type: string
+          address:
+            type: string
+          city:
+            type: string
+          state:
+            type: string
+          zip:
+            type: string
+          country:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+          deletedAt:
+            type: string
+          userId:
+            type: string
+          accountId:
+            type: string
+
+          accountName:
+            type: string
+
+
+
+
 
 
 
