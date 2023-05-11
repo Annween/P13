@@ -176,13 +176,15 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
+  /accounts/:accountId/transactions/:transactionId/details:
     put:
       security:
         - Bearer: [ ]
       tags:
         - User Module
       summary: User Transaction API
-      description: API for updating transaction
+      description: API for updating transaction details
       parameters:
         - in: header
           name: Authorization
@@ -209,7 +211,7 @@ paths:
         '200':
           description: Transaction updated successully
           schema:
-              $ref: '#/definitions/ApiResponse'
+              $ref: '#/definitions/TransactionDetails'
         '400':
           description: Invalid Fields
         '500':
@@ -220,7 +222,7 @@ paths:
       tags:
         - User Module
       summary: User Profile API
-      description: API for updating a auth profile
+      description: API for deleting details of a transaction
       parameters:
         - in: header
           name: Authorization
@@ -239,15 +241,13 @@ paths:
         - application/json
       responses:
         '200':
-            description: OK
-            content:
-              application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                      type: string
-                      description: Message de confirmation indiquant que la transaction a été supprimée avec succès.
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Message de confirmation indiquant que la transaction a été supprimée avec succès.
         '400':
           description: Invalid Fields
         '500':
@@ -329,71 +329,15 @@ definitions:
         type: string
       status:
         type: string
+
+
   TransactionDetails:
-    type: object
-    properties:
-      accountId:
-        type: string
-      transactionId:
-        type: string
-      amount:
-        type: number
-      description:
-        type: string
-      date:
-        type: string
-      category:
-        type: string
-      type:
-        type: string
-      status:
-        type: string
-      details:
         type: object
         properties:
-          id:
+          note:
             type: string
-          email:
+          category:
             type: string
-          firstName:
-            type: string
-          lastName:
-            type: string
-          phone:
-            type: string
-          address:
-            type: string
-          city:
-            type: string
-          state:
-            type: string
-          zip:
-            type: string
-          country:
-            type: string
-          createdAt:
-            type: string
-          updatedAt:
-            type: string
-          deletedAt:
-            type: string
-          userId:
-            type: string
-          accountId:
-            type: string
-
-          accountName:
-            type: string
-
-
-
-
-
-
-
-
-
-
 
 
 
